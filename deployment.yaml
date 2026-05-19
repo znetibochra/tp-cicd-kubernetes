@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mon-appli
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mon-appli
+  template:
+    metadata:
+      labels:
+        app: mon-appli
+    spec:
+      containers:
+      - name: mon-conteneur
+        # IMPORTANT : Utilisez le nom de l'image que nous avons buildée localement
+        image: mon-image:latest 
+        # IMPORTANT : Empêche Kubernetes de chercher sur Docker Hub (car l'image est locale)
+        imagePullPolicy: Never 
+        ports:
+        # IMPORTANT : On utilise le port 3000 que nous avons vu dans Docker Desktop
+        - containerPort: 3000
